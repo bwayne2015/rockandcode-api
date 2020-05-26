@@ -8,17 +8,21 @@ import {
   Put,
 } from '@nestjs/common';
 import { CreatePostDto } from './dto/create-post.dto';
+import { PostsService } from './posts.service';
+import { PostInterface } from './interfaces/post.interface';
 
 @Controller('posts')
 export class PostsController {
+  constructor(private readonly postsService: PostsService) {}
+
   @Get()
-  findAll(): string {
-    return 'All the posts';
+  findAll(): PostInterface[] {
+    return this.postsService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id): string {
-    return `Post ${id}`;
+  findOne(@Param('id') id): PostInterface {
+    return this.postsService.fondOne(id);
   }
 
   @Post()
